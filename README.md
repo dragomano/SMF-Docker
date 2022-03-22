@@ -57,3 +57,33 @@ This requires a minor change to the [`docker-compose.yml`](https://github.com/dr
 -    mysql:
 -    pgsql:
 ```
+
+## Backup databases
+
+### MariaDB:
+
+Export:
+
+```sh
+docker exec mariadb sh -c 'exec mysqldump "$MYSQL_DATABASE" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD"' > mysql_databases.sql
+```
+
+Import:
+
+```sh Import
+docker exec -i mariadb sh -c 'exec mysql "$MYSQL_DATABASE" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD"' < mysql_databases.sql
+```
+
+### PostreSQL
+
+Export:
+
+```sh
+docker exec postgres sh -c 'exec pg_dump "$POSTGRES_DB" -U "$POSTGRES_USER"' > pgsql_databases.sql
+```
+
+Import:
+
+```sh
+docker exec postgres sh -c 'exec psql "$POSTGRES_DB" -U "$POSTGRES_USER"' < pgsql_databases.sql
+```
