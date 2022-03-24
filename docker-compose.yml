@@ -5,6 +5,14 @@ services:
         image: 'memcached:alpine'
         container_name: memcached
 
+    redis:
+        image: 'redis:alpine'
+        container_name: redis
+        restart: always
+        volumes:
+            - redis:/data
+            #- ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
     mariadb:
         image: mariadb
         container_name: mariadb
@@ -70,3 +78,4 @@ volumes:
     smf:
     mysql:
     pgsql:
+    redis:
