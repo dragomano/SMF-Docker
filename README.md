@@ -91,3 +91,46 @@ Import:
 ```sh
 docker exec postgres sh -c 'exec psql "$POSTGRES_DB" -U "$POSTGRES_USER"' < pgsql_databases.sql
 ```
+
+## Xdebug 3
+
+To install **xdebug** extension just add this line in `php-fpm/Dockerfile`:
+
+```diff
+        php7.4-redis \
++       php7.4-xdebug; \
+```
+
+To configure **Xdebug 3** you need add these lines in `php-fpm/php-ini-overrides.ini`:
+
+### For Linux:
+
+```ini
+xdebug.mode = debug
+xdebug.remote_connect_back = true
+xdebug.start_with_request = yes
+```
+
+### For MacOS and Windows:
+
+```ini
+xdebug.mode = debug
+xdebug.remote_host = host.docker.internal
+xdebug.start_with_request = yes
+```
+
+## Add the section “environment” to the php-fpm service in docker-compose.yml:
+
+```
+environment:
+  PHP_IDE_CONFIG: "serverName=Docker"
+```
+
+### Create a server configuration in PHPStorm:
+
+* In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
+* Add new server
+* The “Name” field should be the same as the parameter “serverName” value in “environment” in docker-compose.yml (i.e. *Docker* in the example above)
+* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in docker-compose.yml
+* Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
+* Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
