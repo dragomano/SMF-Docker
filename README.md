@@ -1,8 +1,19 @@
 # SMF Docker
 
-This is a Docker image for testing the freshest version of SMF (from GitHub). Unless you're a developer, you're not likely to need it.
+So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress), and [bitnami/phpbb](https://hub.docker.com/r/bitnami/phpbb). Why not make a similar solution for SMF?
 
-Это образ Docker для тестирования наисвежайшей версии SMF (с Гитхаба). Если вы не разработчик, вам вряд ли это пригодится.
+This is a Docker image for testing the freshest version of SMF (from GitHub).
+
+Это образ Docker для тестирования наисвежайшей версии SMF (с Гитхаба).
+
+## Requirements
+
+* Docker Desktop
+* Docker Compose
+
+## Change the PHP version
+
+Open `docker/php-fpm/Dockerfile` and replace `7.4` with desired version.
 
 ## How to run/stop
 
@@ -134,3 +145,7 @@ environment:
 * A value of the "port" field should be the same as first port(before a colon) in "webserver" service in docker-compose.yml
 * Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
 * Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
+
+## Alternatives
+
+If this solution seems too complicated for you, try [Laradock](https://laradock.io/getting-started/#installation).
