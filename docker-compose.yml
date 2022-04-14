@@ -1,38 +1,59 @@
-version: '3.8'
+version: '3.9'
 
 services:
     memcached:
-        image: 'memcached:alpine'
+        image: memcached:alpine
         container_name: memcached
 
     redis:
-        image: 'redis:alpine'
+        image: redis:alpine
         container_name: redis
         restart: always
         volumes:
             - redis:/data
             #- ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
+    ftp:
+        image: stilliard/pure-ftpd
+        container_name: ftp
+        restart: always
+        environment:
+            - PUBLICHOST=localhost
+            - FTP_USER_NAME=user
+            - FTP_USER_PASS=pass
+            - FTP_USER_HOME=/var/www/html
+        volumes:
+            - ftp:/etc/pure-ftpd/passwd
+            - ftp:/home/ftpusers
+            - smf:/var/www/html
+        ports:
+            - "21:21"
+            - "30000-30009:30000-30009"
+        depends_on:
+            - smf
+
     mariadb:
         image: mariadb
         container_name: mariadb
         restart: always
-        volumes:
-            - mysql:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_DATABASE=smf
             - MYSQL_USER=user
             - MYSQL_PASSWORD=pass
-        ports:
-            - 3306:3306
+        volumes:
+            #- ./db/mysql:/var/lib/mysql
+            - mysql:/var/lib/mysql
+            #- ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        # ports:
+        #     - 3306:3306
 
     postgres:
         image: 'postgres:14-alpine'
         container_name: postgres
         restart: always
         volumes:
-            - pgsql:/var/lib/postgresql/data
+            - ./db/pgsql:/var/lib/postgresql/data
         environment:
             - POSTGRES_DB=smf
             - POSTGRES_USER=user
@@ -45,37 +66,51 @@ services:
         container_name: adminer
         restart: always
         environment:
-            - ADMINER_DEFAULT_SERVER=db
+            - ADMINER_DEFAULT_SERVER=mariadb
             - ADMINER_DESIGN=lucas-sandery
         ports:
             - 8080:8080
         depends_on:
             - mariadb
-            - postgres
+            # - postgres
 
     web:
-        image: 'nginx:alpine'
+        image: nginx:alpine
         container_name: web
         working_dir: /var/www/html
         volumes:
+            #- ./src:/var/www/html
             - smf:/var/www/html
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            #- ./logs:/var/log/nginx
         ports:
             - 80:80
-        links:
-            - mariadb
-            - postgres
 
     php-fpm:
-        build: docker/php-fpm
-        container_name: php
+        build:
+            context: ./docker/php-fpm
+            target: backend
+        container_name: backend
+        working_dir: /var/www/html
+        volumes:
+            #- ./src:/var/www/html
+            - smf:/var/www/html
+            - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+
+    smf:
+        build:
+            context: ./docker/php-fpm
+            target: smf
+        container_name: smf
         working_dir: /var/www/html
         volumes:
             - smf:/var/www/html
-            - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+        depends_on:
+            - php-fpm
 
 volumes:
     smf:
     mysql:
     pgsql:
     redis:
+    ftp:

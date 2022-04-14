@@ -34,8 +34,11 @@ MariaDB|mariadb|3306 (default)
 Postgres|postgres|5432 (default)
 Memcached|memcached|11211 (default)
 Redis|redis|6379 (default)
+FTP|ftp|21 (default)
 
 Use `mariadb` or `postgres` instead of `localhost`, and `user/pass` for SMF installing or Adminer connection.
+
+Use `ftp` instead of `localhost`, and `user/pass` for FTP connection.
 
 ## Persisting your application
 
