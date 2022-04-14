@@ -19,6 +19,5 @@ FROM backend as smf
 
 RUN curl -SL -o install.zip https://0exclusive.de/smf/smf2.1_nightly_install.zip \
 	&& unzip install.zip \
-	&& rm install.zip \
-	&& chmod 777 attachments avatars cache custom_avatar Packages Smileys Themes agreement.txt Settings.php Settings_bak.php \
-	&& chown -R www-data:www-data .
+	&& rm install.zip; \
+	chown -R www-data:www-data . && chmod -R 777 .
