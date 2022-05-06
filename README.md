@@ -11,9 +11,9 @@ This is a Docker image for testing the latest version of SMF (from GitHub).
 * Docker Desktop
 * Docker Compose
 
-## Change the PHP version
+## Change the PHP version and environments
 
-Open `docker/php-fpm/Dockerfile` and replace `7.4` with desired version.
+Edit `.env` file.
 
 ## How to run/stop
 
@@ -30,55 +30,26 @@ Use the following information to install/configure your SMF:
 
 Service|Hostname|Port number
 ------|---------|-----------
+MySQL|mysql|3306 (default)
 MariaDB|mariadb|3306 (default)
 Postgres|postgres|5432 (default)
 Memcached|memcached|11211 (default)
 Redis|redis|6379 (default)
 FTP|ftp|21 (default)
 
-Use `mariadb` or `postgres` instead of `localhost`, and `user/pass` for SMF installing or Adminer connection.
-
-Use `ftp` instead of `localhost`, and `user/pass` for FTP connection.
+Login/pass by default - `user/pass`.
 
 ## Persisting your application
 
 If you remove the container all your data will be lost, and the next time you run the image the database will be reinitialized. To avoid this loss of data, you should mount a volume that will persist even after the container is removed.
 
-For persistence you should mount a directory at the `/var/www/html` path. If the mounted directory is empty, it will be initialized on the first run. Additionally you should mount a volume for persistence of the MariaDB or PostgreSQL data.
+For persistence you should mount a directory at the `/app` path. If the mounted directory is empty, it will be initialized on the first run. Additionally you should mount a volume for persistence of the MariaDB or PostgreSQL data.
 
 To avoid inadvertent removal of volumes, you can mount host directories as data volumes. Alternatively you can make use of volume plugins to host the volume data.
 
-### Mount host directories as data volumes with Docker Compose
-
-This requires a minor change to the [`docker-compose.yml`](https://github.com/dragomano/SMF-Docker/blob/main/docker-compose.yml) file present in this repository:
-
-```diff
-    mariadb:
-        ...
-        volumes:
--           - mysql:/var/lib/mysql
-+           - /path/to/mariadb-persistence:/var/lib/mysql
-    postgres:
-        ...
-        volumes:
--           - pgsql:/var/lib/postgresql/data
-+           - /path/to/postgres-persistence:/var/lib/postgresql/data
-    ...
-    php-fpm:
-        ...
-        volumes:
--           - smf:/var/www/html
-+           - /path/to/smf-persistence:/var/www/html
-    ...
--volumes:
--    smf:
--    mysql:
--    pgsql:
-```
-
 ## Backup databases
 
-### MariaDB:
+### MySQL/MariaDB:
 
 Export:
 
@@ -111,8 +82,8 @@ docker exec postgres sh -c 'exec psql "$POSTGRES_DB" -U "$POSTGRES_USER"' < pgsq
 To install **xdebug** extension just add this line in `php-fpm/Dockerfile`:
 
 ```diff
-        php7.4-redis \
-+       php7.4-xdebug; \
+        php${PHP_VERSION}-redis \
++       php${PHP_VERSION}-xdebug; \
 ```
 
 To configure **Xdebug 3** you need add these lines in `php-fpm/php-ini-overrides.ini`:
@@ -149,7 +120,7 @@ environment:
 * Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
 * Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
 
-## Do you want to know more?
+## Do you want to know more about Docker?
 
 See [Docker for local web development, introduction: why should you care?](https://tech.osteel.me/posts/docker-for-local-web-development-introduction-why-should-you-care)
 
