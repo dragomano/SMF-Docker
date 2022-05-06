@@ -1,17 +1,19 @@
-FROM phpdockerio/php:7.4-fpm as backend
+ARG PHP_VERSION=7.4
 
-WORKDIR "/var/www/html"
+FROM phpdockerio/php:${PHP_VERSION}-fpm as backend
+
+WORKDIR "/app"
 
 RUN apt-get update; \
 	apt-get -y --no-install-recommends install \
-		php7.4-bcmath \
-		php7.4-gd \
-		php7.4-imagick \
-		php7.4-intl \
-		php7.4-mysql \
-		php7.4-pgsql \
-		php7.4-memcached \
-		php7.4-redis; \
+		php${PHP_VERSION}-bcmath \
+		php${PHP_VERSION}-gd \
+		php${PHP_VERSION}-imagick \
+		php${PHP_VERSION}-intl \
+		php${PHP_VERSION}-mysql \
+		php${PHP_VERSION}-pgsql \
+		php${PHP_VERSION}-memcached \
+		php${PHP_VERSION}-redis; \
 	apt-get clean; \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
