@@ -1,6 +1,8 @@
 # SMF Docker
 
-So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress), and [bitnami/phpbb](https://hub.docker.com/r/bitnami/phpbb). Why not make a similar solution for SMF?
+So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress), and [bitnami/phpbb](https://hub.docker.com/r/bitnami/phpbb).
+
+Why not make a similar solution for SMF? Let's try :)
 
 This is a Docker image for testing the latest version of SMF (from GitHub).
 
@@ -11,17 +13,35 @@ This is a Docker image for testing the latest version of SMF (from GitHub).
 * Docker Desktop
 * Docker Compose
 
-## Change the PHP version and environments
+## Environments
 
-Edit `.env` file.
+See `.env` file.
 
-## How to run/stop
+## How to change PHP version
+
+* Change `PHP_VERSION` in `.env` file
+* Run `docker compose build php-fpm`
+* Run `docker compose down`
+* Run containers
+
+## How to run
+
+### Apache (default)
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
+
+### Nginx
+
 ```sh
-docker-compose down
+docker compose -f docker-compose-nginx.yml up -d
+```
+
+## How to stop
+
+```sh
+docker compose down
 ```
 
 ## Hosts within your environment
@@ -115,8 +135,8 @@ environment:
 
 * In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
 * Add new server
-* The “Name” field should be the same as the parameter “serverName” value in “environment” in docker-compose.yml (i.e. *Docker* in the example above)
-* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in docker-compose.yml
+* The “Name” field should be the same as the parameter “serverName” value in “environment” in _docker-compose.yml_ (i.e. *Docker* in the example above)
+* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _docker-compose.yml_
 * Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
 * Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
 

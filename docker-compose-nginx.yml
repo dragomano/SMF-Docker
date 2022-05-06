@@ -1,0 +1,65 @@
+services:
+
+  memcached:
+    extends:
+      file: docker-compose.yml
+      service: memcached
+
+  # redis:
+  #   extends:
+  #     file: docker-compose.yml
+  #     service: redis
+
+  # ftp:
+  #   extends:
+  #     file: docker-compose.yml
+  #     service: ftp
+
+  # mysql:
+  #   extends:
+  #     file: docker-compose.yml
+  #     service: mysql
+
+  mariadb:
+    extends:
+      file: docker-compose.yml
+      service: mariadb
+
+  postgres:
+    extends:
+      file: docker-compose.yml
+      service: postgres
+
+  adminer:
+    extends:
+      file: docker-compose.yml
+      service: adminer
+
+  php-fpm:
+    extends:
+      file: docker-compose.yml
+      service: php-fpm
+
+  smf:
+    extends:
+      file: docker-compose.yml
+      service: smf
+
+  nginx:
+    image: bitnami/nginx:1.21
+    container_name: ${APP_NAME}_nginx
+    restart: always
+    ports:
+      - 80:8080
+    volumes:
+      - ./_docker/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/default.conf:ro
+      - web:/app
+    depends_on:
+      - mariadb
+      - smf
+
+volumes:
+  redis:
+  mysql:
+  pgsql:
+  web:
