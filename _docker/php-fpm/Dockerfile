@@ -2,7 +2,7 @@ ARG PHP_VERSION=7.4
 
 FROM phpdockerio/php:${PHP_VERSION}-fpm as backend
 
-WORKDIR "/app"
+ARG PHP_VERSION=7.4
 
 RUN apt-get update; \
 	apt-get -y --no-install-recommends install \
@@ -18,6 +18,8 @@ RUN apt-get update; \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 FROM backend as smf
+
+WORKDIR "/app"
 
 RUN curl -SL -o install.zip https://0exclusive.de/smf/smf2.1_nightly_install.zip \
 	&& unzip install.zip \

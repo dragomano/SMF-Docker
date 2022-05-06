@@ -63,7 +63,7 @@ services:
     volumes:
       - pgsql:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB:=${DB_NAME}
+      - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
 
@@ -80,7 +80,7 @@ services:
       - mariadb
       - postgres
 
-  php:
+  php-fpm:
     env_file: .env
     build:
       context: ./_docker/php-fpm
@@ -103,7 +103,7 @@ services:
     volumes:
       - web:/app
     depends_on:
-      - php
+      - php-fpm
 
   apache:
     image: bitnami/apache:2.4
@@ -116,7 +116,7 @@ services:
       - web:/app
     depends_on:
       - mariadb
-      - php
+      - smf
 
 volumes:
   redis:
