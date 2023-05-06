@@ -1,8 +1,8 @@
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=8.2
 
 FROM phpdockerio/php:${PHP_VERSION}-fpm as backend
 
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=8.2
 
 RUN apt-get update; \
 	apt-get -y --no-install-recommends install \
