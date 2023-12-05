@@ -22,7 +22,7 @@ See `.env` file.
 * Change `PHP_VERSION` in `.env` file
 * Run `docker compose build php-fpm`
 * Run `docker compose down`
-* Run containers
+* Run `docker compose up -d`
 
 ## How to run
 
@@ -35,7 +35,7 @@ docker compose up -d
 ### Nginx
 
 ```sh
-docker compose -f docker-compose-nginx.yml up -d
+docker compose -f compose-nginx.yaml up -d
 ```
 
 ## How to stop
@@ -124,7 +124,7 @@ xdebug.remote_host = host.docker.internal
 xdebug.start_with_request = yes
 ```
 
-## Add the section “environment” to the php-fpm service in docker-compose.yml:
+## Add the section “environment” to the php-fpm service in `compose.yaml`:
 
 ```
 environment:
@@ -135,8 +135,8 @@ environment:
 
 * In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
 * Add new server
-* The “Name” field should be the same as the parameter “serverName” value in “environment” in _docker-compose.yml_ (i.e. *Docker* in the example above)
-* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _docker-compose.yml_
+* The “Name” field should be the same as the parameter “serverName” value in “environment” in _compose.yaml_ (i.e. *Docker* in the example above)
+* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _compose.yaml_
 * Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
 * Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
 

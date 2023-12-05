@@ -1,58 +1,59 @@
 services:
-
   memcached:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: memcached
 
   # redis:
   #   extends:
-  #     file: docker-compose.yml
+  #     file: compose.yaml
   #     service: redis
 
   # ftp:
   #   extends:
-  #     file: docker-compose.yml
+  #     file: compose.yaml
   #     service: ftp
 
   # mysql:
   #   extends:
-  #     file: docker-compose.yml
+  #     file: compose.yaml
   #     service: mysql
 
   mariadb:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: mariadb
 
   postgres:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: postgres
 
   adminer:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: adminer
 
   php-fpm:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: php-fpm
 
   smf:
     extends:
-      file: docker-compose.yml
+      file: compose.yaml
       service: smf
 
   nginx:
-    image: bitnami/nginx:1.21
+    image: bitnami/nginx
     container_name: ${APP_NAME}_nginx
     restart: always
     ports:
       - 80:8080
+      - 443:8443
     volumes:
       - ./_docker/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/default.conf:ro
+      - ./_docker/certs:/certs
       - web:/app
     depends_on:
       - mariadb

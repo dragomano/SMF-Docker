@@ -1,8 +1,8 @@
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.0
 
 FROM phpdockerio/php:${PHP_VERSION}-fpm as backend
 
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION
 
 RUN apt-get update; \
 	apt-get -y --no-install-recommends install \
@@ -19,9 +19,11 @@ RUN apt-get update; \
 
 FROM backend as smf
 
-WORKDIR "/app"
+WORKDIR /app
 
-RUN curl -SL -o install.zip https://0exclusive.de/smf/smf2.1_nightly_install.zip \
-	&& unzip install.zip \
-	&& rm install.zip; \
-	chown -R www-data:www-data . && chmod -R 777 .
+# https://download.simplemachines.org/index.php/smf_2-1-4_install.zip
+RUN curl -s -k -o install.zip https://0exclusive.de/smf/smf2.1_nightly_install.zip && \
+	unzip install.zip && \
+	rm install.zip; \
+	chown -R www-data:www-data . && \
+	chmod -R 777 .
