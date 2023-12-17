@@ -10,8 +10,8 @@ This is a Docker image for testing the latest version of SMF (from GitHub).
 
 ## Requirements
 
-* Docker Desktop
-* Docker Compose
+- Docker Desktop
+- Docker Compose
 
 ## Environments
 
@@ -19,12 +19,12 @@ See `.env` file.
 
 ## How to change PHP version
 
-* Change `PHP_VERSION` in `.env` file
-* Run `docker compose build php-fpm`
-* Run `docker compose down`
-* Run `docker compose up -d`
+- Change `PHP_VERSION` in `.env` file
+- Run `docker compose build php-fpm`
+- Run `docker compose down`
+- Run `docker compose up -d`
 
-## How to run
+## How to run and stop
 
 ### Apache (default)
 
@@ -32,30 +32,32 @@ See `.env` file.
 docker compose up -d
 ```
 
+```sh
+docker compose down
+```
+
 ### Nginx
 
 ```sh
-docker compose -f compose-nginx.yaml up -d
+docker compose -f nginx.yaml up -d
 ```
 
-## How to stop
-
 ```sh
-docker compose down
+docker compose -f nginx.yaml down
 ```
 
 ## Hosts within your environment
 
 Use the following information to install/configure your SMF:
 
-Service|Hostname|Port number
-------|---------|-----------
-MySQL|mysql|3306 (default)
-MariaDB|mariadb|3306 (default)
-Postgres|postgres|5432 (default)
-Memcached|memcached|11211 (default)
-Redis|redis|6379 (default)
-FTP|ftp|21 (default)
+| Service   | Hostname  | Port number     |
+| --------- | --------- | --------------- |
+| MySQL     | mysql     | 3306 (default)  |
+| MariaDB   | mariadb   | 3306 (default)  |
+| Postgres  | postgres  | 5432 (default)  |
+| Memcached | memcached | 11211 (default) |
+| Redis     | redis     | 6379 (default)  |
+| FTP       | ftp       | 21 (default)    |
 
 Login/pass by default - `user/pass`.
 
@@ -133,12 +135,12 @@ environment:
 
 ### Create a server configuration in PHPStorm:
 
-* In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
-* Add new server
-* The “Name” field should be the same as the parameter “serverName” value in “environment” in _compose.yaml_ (i.e. *Docker* in the example above)
-* A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _compose.yaml_
-* Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
-* Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
+- In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
+- Add new server
+- The “Name” field should be the same as the parameter “serverName” value in “environment” in _compose.yaml_ (i.e. _Docker_ in the example above)
+- A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _compose.yaml_
+- Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
+- Finally, add “Xdebug helper” extension in your browser, set breakpoints and start debugging
 
 ## Do you want to know more about Docker?
 

@@ -4,13 +4,13 @@ services:
     image: memcached:alpine
     container_name: ${APP_NAME}_memcached
 
-  # redis:
-  #   image: redis:alpine
-  #   container_name: ${APP_NAME}_redis
-  #   restart: always
-  #   volumes:
-  #       - redis:/data
-  #       - ./_docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  #redis:
+  #  image: redis:alpine
+  #  container_name: ${APP_NAME}_redis
+  #  restart: always
+  #  volumes:
+  #      - redis:/data
+  #      - ./_docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
   # ftp:
   #   image: stilliard/pure-ftpd
@@ -112,9 +112,10 @@ services:
       - 80:8080
       - 443:8443
     volumes:
-      - ./_docker/apache/httpd.conf:/vhosts/httpd.conf:ro
-      - ./_docker/certs:/certs
+      - ./_docker/apache:/vhosts:ro
+      #- ./_docker/certs:/certs
       - web:/app
+      #- ./src:/app
     depends_on:
       - mariadb
       - smf

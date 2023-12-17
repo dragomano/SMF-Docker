@@ -4,10 +4,10 @@ services:
       file: compose.yaml
       service: memcached
 
-  # redis:
-  #   extends:
-  #     file: compose.yaml
-  #     service: redis
+  #redis:
+  #  extends:
+  #    file: compose.yaml
+  #    service: redis
 
   # ftp:
   #   extends:
@@ -52,9 +52,10 @@ services:
       - 80:8080
       - 443:8443
     volumes:
-      - ./_docker/nginx/default.conf:/opt/bitnami/nginx/conf/server_blocks/default.conf:ro
-      - ./_docker/certs:/certs
+      - ./_docker/nginx:/opt/bitnami/nginx/conf/server_blocks:ro
+      #- ./_docker/certs:/certs
       - web:/app
+      #- ./src:/app
     depends_on:
       - mariadb
       - smf
