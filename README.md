@@ -4,9 +4,9 @@ So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/
 
 Why not make a similar solution for SMF? Let's try :)
 
-This is a Docker image for testing the latest version of SMF (from GitHub).
+This is a Docker image for testing the latest stable version of SMF.
 
-Это образ Docker для тестирования наисвежайшей версии SMF (с Гитхаба).
+Это образ Docker для тестирования текущей стабильной версии SMF.
 
 ## Requirements
 
