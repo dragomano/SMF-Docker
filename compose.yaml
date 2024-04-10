@@ -7,10 +7,14 @@ services:
   #redis:
   #  image: redis:alpine
   #  container_name: ${APP_NAME}_redis
+  #  command: redis-server /usr/local/etc/redis/redis.conf
   #  restart: always
   #  volumes:
   #      - redis:/data
   #      - ./_docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  #  environment:
+  #    REDIS_USERNAME: ${REDIS_USERNAME}
+  #    REDIS_PASSWORD: ${REDIS_PASSWORD}
 
   # ftp:
   #   image: stilliard/pure-ftpd
