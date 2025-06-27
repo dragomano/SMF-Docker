@@ -22,7 +22,7 @@ FROM backend as smf
 WORKDIR /app
 
 # https://0exclusive.de/smf/smf2.1_nightly_install.zip
-RUN curl -s -k -o install.zip https://download.simplemachines.org/index.php/smf_2-1-4_install.zip && \
+RUN curl -s -k -o install.zip https://download.simplemachines.org/index.php/smf_2-1-6_install.zip && \
 	unzip install.zip && \
 	rm install.zip; \
 	chown -R www-data:www-data . && \
