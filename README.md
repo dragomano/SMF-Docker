@@ -1,6 +1,6 @@
 # SMF Docker
 
-So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress), and [bitnami/phpbb](https://hub.docker.com/r/bitnami/phpbb).
+So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress).
 
 Why not make a similar solution for SMF? Let's try :)
 
