@@ -21,8 +21,12 @@ FROM backend as smf
 
 WORKDIR /app
 
+ARG SMF_VERSION
+
 # https://0exclusive.de/smf/smf2.1_nightly_install.zip
-RUN curl -s -k -o install.zip https://download.simplemachines.org/index.php/smf_2-1-6_install.zip && \
+RUN set -eux; \
+	SMF_VERSION_DASH="${SMF_VERSION//./-}"; \
+	curl -s -k -o install.zip https://download.simplemachines.org/index.php/smf_${SMF_VERSION_DASH}_install.zip && \
 	unzip install.zip && \
 	rm install.zip; \
 	chown -R www-data:www-data . && \
