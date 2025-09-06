@@ -4,10 +4,10 @@ services:
       file: compose.yaml
       service: memcached
 
-  #redis:
-  #  extends:
-  #    file: compose.yaml
-  #    service: redis
+  # redis:
+  #   extends:
+  #     file: compose.yaml
+  #     service: redis
 
   # ftp:
   #   extends:
@@ -45,17 +45,17 @@ services:
       service: smf
 
   nginx:
-    image: bitnami/nginx
+    build:
+      context: .
+      dockerfile: _docker/nginx/Dockerfile
     container_name: ${APP_NAME}_nginx
     restart: always
     ports:
-      - 80:8080
-      - 443:8443
+      - 80:80
+      - 443:443
     volumes:
-      - ./_docker/nginx:/opt/bitnami/nginx/conf/server_blocks:ro
-      #- ./_docker/certs:/certs
       - web:/app
-      #- ./src:/app
+      - ./_docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - mariadb
       - smf
