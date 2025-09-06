@@ -57,7 +57,7 @@ Use the following information to install/configure your SMF:
 | Postgres  | postgres  | 5432 (default)  |
 | Memcached | memcached | 11211 (default) |
 | Redis     | redis     | 6379 (default)  |
-| FTP       | ftp       | 21 (default)    |
+| FTP       | localhost | 21 (default)    |
 
 Login/pass by default - `user/pass`.
 
