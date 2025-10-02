@@ -1,5 +1,4 @@
 services:
-
   memcached:
     image: memcached:alpine
     container_name: ${APP_NAME}_memcached
@@ -61,7 +60,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASS}
 
   postgres:
-    image: 'postgres:alpine'
+    image: "postgres:alpine"
     container_name: ${APP_NAME}_postgres
     restart: always
     volumes:
@@ -110,15 +109,16 @@ services:
       - php-fpm
 
   apache:
-    image: bitnami/apache
+    build:
+      context: .
+      dockerfile: _docker/apache/Dockerfile
     container_name: ${APP_NAME}_apache
     restart: always
     ports:
-      - 80:8080
-      - 443:8443
+      - 80:80
+      - 443:443
     volumes:
-      - ./_docker/apache:/vhosts:ro
-      #- ./_docker/certs:/certs
+      - ./_docker/apache/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
       - web:/app
       #- ./src:/app
     depends_on:
