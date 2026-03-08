@@ -1,12 +1,10 @@
 # SMF Docker
 
-So, there are some great Docker images like [Wordpess](https://hub.docker.com/_/wordpress).
+So, there are some great Docker images like [WordPress](https://hub.docker.com/_/wordpress).
 
 Why not make a similar solution for SMF? Let's try :)
 
 This is a Docker image for testing the latest stable version of SMF.
-
-Это образ Docker для тестирования текущей стабильной версии SMF.
 
 ## Requirements
 
@@ -63,7 +61,7 @@ Login/pass by default - `user/pass`.
 
 ## Persisting your application
 
-If you remove the container all your data will be lost, and the next time you run the image the database will be reinitialized. To avoid this loss of data, you should mount a volume that will persist even after the container is removed.
+If you remove the container, all your data will be lost, and the next time you run the image the database will be reinitialized. To avoid this loss of data, you should mount a volume that will persist even after the container is removed.
 
 For persistence you should mount a directory at the `/app` path. If the mounted directory is empty, it will be initialized on the first run. Additionally you should mount a volume for persistence of the MariaDB or PostgreSQL data.
 
@@ -81,7 +79,7 @@ docker exec mariadb sh -c 'exec mysqldump "$MYSQL_DATABASE" -u"$MYSQL_USER" -p"$
 
 Import:
 
-```sh Import
+```sh
 docker exec -i mariadb sh -c 'exec mysql "$MYSQL_DATABASE" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD"' < mysql_databases.sql
 ```
 
@@ -136,7 +134,7 @@ environment:
 ### Create a server configuration in PHPStorm:
 
 - In PHPStorm open Preferences | Languages & Frameworks | PHP | Servers
-- Add new server
+- Add a new server
 - The “Name” field should be the same as the parameter “serverName” value in “environment” in _compose.yaml_ (i.e. _Docker_ in the example above)
 - A value of the "port" field should be the same as first port(before a colon) in "webserver" service in _compose.yaml_
 - Select "Use path mappings" and set mappings between a path to your project on a host system and the Docker container.
